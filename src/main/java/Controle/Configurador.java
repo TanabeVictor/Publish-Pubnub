@@ -23,17 +23,17 @@ public class Configurador {
     
         public void publish(String data) {
                 try {
-			 pubnub.publish().channel(kChannel).message(data).async(new PNCallback<PNPublishResult>() {
+                pubnub.publish().channel(kChannel).message(data).async(new PNCallback<PNPublishResult>() {
                 @Override
                 public void onResponse(PNPublishResult result, PNStatus status) {
                     // handle publish response
                 }
                 });
-            pubnub.subscribe()
-            .channels(Arrays.asList(kChannel)) // subscribe to channels
-            .withPresence() // also subscribe to related presence information
-            .execute();
-		} catch (Exception e) {
+                pubnub.subscribe()
+                .channels(Arrays.asList(kChannel)) // subscribe to channels
+                .withPresence() // also subscribe to related presence information
+                .execute();
+                } catch (Exception e) {
 			System.out.println("Error in configuration");
 			e.printStackTrace();
 		}
