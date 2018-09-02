@@ -1,11 +1,13 @@
 package Entidade;
 
-public class Sensor {
+import java.io.Serializable;
+
+public class Sensor implements Serializable{
 
     private String ID, tipo, mensagem;
     private int redeID, value;
 
-    public Sensor(String ID, String tipo, int redeID, String mensagem, int value) {
+    public Sensor(String ID, String tipo, int redeID, String mensagem, int value) throws Exception {
         this.mensagem = mensagem;
         this.ID = ID;
         this.tipo = tipo;

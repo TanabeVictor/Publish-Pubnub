@@ -9,8 +9,13 @@ public class Principal extends javax.swing.JFrame {
 
     ctrRede rede = new ctrRede();
 
-    public Principal() {
-        initComponents();
+    public Principal() throws Exception {
+        try {
+            rede.recuperaRede();
+        } catch (Exception ex) {
+            System.out.println("Erro ao Recuperar a Rede");
+        }
+        initComponents(); 
     }
 
     @SuppressWarnings("unchecked")
@@ -75,7 +80,7 @@ public class Principal extends javax.swing.JFrame {
         tipoCombobox.setBackground(new java.awt.Color(51, 0, 102));
         tipoCombobox.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         tipoCombobox.setForeground(new java.awt.Color(255, 255, 255));
-        tipoCombobox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Temperatura", "Presença", "Umidade" }));
+        tipoCombobox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Temperatura", "Umidade" }));
         tipoCombobox.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel3.add(tipoCombobox, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 210, 216, -1));
 

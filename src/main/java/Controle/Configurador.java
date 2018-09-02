@@ -6,7 +6,6 @@ import com.pubnub.api.callbacks.PNCallback;
 import com.pubnub.api.models.consumer.PNPublishResult;
 import com.pubnub.api.models.consumer.PNStatus;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
@@ -48,7 +47,25 @@ public class Configurador {
             e.printStackTrace();
         }
     }
-
+    
+    public void publicaRede(Sensor sensor) {
+        try {
+            pubnub.publish().channel(kChannel).message(sensor).async(new PNCallback<PNPublishResult>() {
+                @Override
+                public void onResponse(PNPublishResult result, PNStatus status) {
+                    // handle publish response
+                }
+            });
+            pubnub.subscribe()
+                    .channels(Arrays.asList(kChannel)) // subscribe to channels
+                    .withPresence() // also subscribe to related presence information
+                    .execute();
+        } catch (Exception e) {
+            System.out.println("Erro na Configuração");
+            e.printStackTrace();
+        }
+    }
+    
     public int createUserID(String aux) {
         int hash = 7;
         for (int i = 0; i < aux.length(); i++) {
