@@ -1,17 +1,12 @@
 package Main;
 
-import Controle.Configurador;
 import Views.Principal;
 
 public class Main {
-    
-    public static void main (String[] args) {
-        // Create the zoo to store animals
+
+    public static void main(String[] args) {
         Principal principal = new Principal();
-        // Register a listener to be notified when an animal is added
-        // Add an animal notify the registered listeners
-        
-        //rede1.addSensor(new Sensor("Sensor 1"));      
+        //Criação e chamada da Tela Inicial da Aplicação
         principal.setVisible(true);
     }
 }

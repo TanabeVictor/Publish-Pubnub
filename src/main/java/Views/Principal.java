@@ -1,21 +1,14 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Views;
 
-import Controle.InformaSensor;
-import Entidade.Rede;
+import Controle.ctrRede;
 import Entidade.Sensor;
+import java.util.Random;
+import javax.swing.JOptionPane;
 
-/**
- *
- * @author vitau
- */
 public class Principal extends javax.swing.JFrame {
-    Rede rede = new Rede();
-    
+
+    ctrRede rede = new ctrRede();
+
     public Principal() {
         initComponents();
     }
@@ -39,11 +32,10 @@ public class Principal extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         valueLabel = new javax.swing.JTextField();
         jSeparator2 = new javax.swing.JSeparator();
-        autoenviarCheckbox = new javax.swing.JCheckBox();
+        autogerarCheckbox = new javax.swing.JCheckBox();
         jPanel1 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
         redeButton = new javax.swing.JButton();
-        jCheckBox1 = new javax.swing.JCheckBox();
         jLabel8 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -54,7 +46,6 @@ public class Principal extends javax.swing.JFrame {
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setIcon(new javax.swing.ImageIcon("C:\\Users\\vitau\\Documents\\Unifei II\\Sistemas_Distribuidos\\Publisher_Maven\\flash.png")); // NOI18N
         jLabel2.setText("Publisher");
         jPanel3.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 70, -1, 44));
 
@@ -64,8 +55,8 @@ public class Principal extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("Sensor ID:");
-        jPanel3.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 170, -1, -1));
+        jLabel1.setText("Sensor MAC:");
+        jPanel3.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 170, -1, -1));
 
         sensorIDLabel.setBackground(new java.awt.Color(51, 0, 102));
         sensorIDLabel.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -137,17 +128,17 @@ public class Principal extends javax.swing.JFrame {
         jSeparator2.setForeground(new java.awt.Color(51, 255, 102));
         jPanel3.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 370, 344, 10));
 
-        autoenviarCheckbox.setBackground(new java.awt.Color(51, 0, 102));
-        autoenviarCheckbox.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        autoenviarCheckbox.setForeground(new java.awt.Color(255, 255, 255));
-        autoenviarCheckbox.setText("Autogerar");
-        autoenviarCheckbox.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        autoenviarCheckbox.addActionListener(new java.awt.event.ActionListener() {
+        autogerarCheckbox.setBackground(new java.awt.Color(51, 0, 102));
+        autogerarCheckbox.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        autogerarCheckbox.setForeground(new java.awt.Color(255, 255, 255));
+        autogerarCheckbox.setText("Autogerar");
+        autogerarCheckbox.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        autogerarCheckbox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                autoenviarCheckboxActionPerformed(evt);
+                autogerarCheckboxActionPerformed(evt);
             }
         });
-        jPanel3.add(autoenviarCheckbox, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 380, -1, -1));
+        jPanel3.add(autogerarCheckbox, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 380, -1, -1));
 
         jPanel1.setBackground(new java.awt.Color(0, 0, 51));
 
@@ -192,17 +183,6 @@ public class Principal extends javax.swing.JFrame {
 
         jPanel3.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 160, 540));
 
-        jCheckBox1.setBackground(new java.awt.Color(51, 0, 102));
-        jCheckBox1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jCheckBox1.setForeground(new java.awt.Color(255, 255, 255));
-        jCheckBox1.setText("Autoenviar");
-        jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBox1ActionPerformed(evt);
-            }
-        });
-        jPanel3.add(jCheckBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 380, -1, -1));
-
         jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(51, 255, 102));
         jLabel8.setText("© 2018, VictorTanabe");
@@ -223,44 +203,55 @@ public class Principal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void sendButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendButtonActionPerformed
-       int valorRede = 0;
-       int valorDado;
-       try{
-       String auxID = sensorIDLabel.getText();
-       String auxTipo = tipoCombobox.getSelectedItem().toString();
-       String auxRede = redeCombobox.getSelectedItem().toString();
-       if(auxRede == "Rede 1")
-       valorRede = 001;
-       String auxMsg = msgLabel.getText();
-       String auxValue = valueLabel.getText();
-       valorDado = Integer.parseInt(auxValue);
-       rede.registerSensorAddedListener(new InformaSensor());
-       rede.addSensor(new Sensor(auxID, auxTipo, valorRede, auxMsg, valorDado));
-       
-       }catch (Exception e) {
-	 System.out.println("Erro de Inserção do Sensor");
-       }
+        int valorRede = 0, valorDado;
+        String auxID, auxTipo, auxRede, auxMsg, auxValue;
+
+        try {
+            auxID = sensorIDLabel.getText();
+            auxTipo = tipoCombobox.getSelectedItem().toString();
+            auxRede = redeCombobox.getSelectedItem().toString();
+
+            valorRede = retornaRede(auxRede);
+
+            auxMsg = msgLabel.getText();
+            auxValue = valueLabel.getText();
+
+            valorDado = Integer.parseInt(auxValue);
+
+            //registra novo Sensor
+            rede.addSensor(new Sensor(auxID, auxTipo, valorRede, auxMsg, valorDado));
+
+        } catch (Exception e) {
+            System.out.println("Erro de Inserção do Sensor");
+        }
     }//GEN-LAST:event_sendButtonActionPerformed
 
-    private void autoenviarCheckboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_autoenviarCheckboxActionPerformed
-       
-    }//GEN-LAST:event_autoenviarCheckboxActionPerformed
+    private void autogerarCheckboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_autogerarCheckboxActionPerformed
+        valueLabel.setText(Integer.toString(gerarValor()));
+    }//GEN-LAST:event_autogerarCheckboxActionPerformed
 
     private void redeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_redeButtonActionPerformed
-        // TODO add your handling code here:
+        String aux = JOptionPane.showInputDialog(null, "Informe qual rede deseja selecionar: \n1 - Rede 1 \n2 - Rede 2");
+        rede.retornaSensores(Integer.parseInt(aux));
     }//GEN-LAST:event_redeButtonActionPerformed
 
-    private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jCheckBox1ActionPerformed
+    private int retornaRede(String redeID) {
+        if (redeID == "Rede 1") {
+            return 1;
+        } else {
+            return 2;
+        }
+    }
 
-    /**
-     * @param args the command line arguments
-     */
-   
+    private int gerarValor() {
+        Random gerador = new Random();
+        int valorLido;
+        valorLido = gerador.nextInt(100);
+        return valorLido;
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JCheckBox autoenviarCheckbox;
-    private javax.swing.JCheckBox jCheckBox1;
+    private javax.swing.JCheckBox autogerarCheckbox;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
